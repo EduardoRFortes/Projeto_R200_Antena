@@ -7,7 +7,7 @@
 const char* SSID = "nersec";
 const char* SENHA = "gremio123";
 
-const char* BROKER_MQTT = "172.22.48.61";  // IP do servidor
+const char* BROKER_MQTT = "172.22.48.70";  // IP do servidor
 const int PORTA_MQTT = 1883;
 const char* CLIENT_ID = "ESP32_RFID_Client";
 const char* TOPICO_MQTT = "/rfid/leituras";
@@ -56,7 +56,7 @@ void publicarMQTT(const String& epc) {
     conectarMQTT();
   }
 
-  DynamicJsonDocument doc(256);
+  JsonDocument doc;
   doc["epc"] = epc;
   doc["timestamp"] = String(millis());
 
@@ -73,7 +73,7 @@ void setup() {
 
   rfid.begin(&Serial2, 115200, 16, 17);
   rfid.dumpModuleInfo();
-  rfid.setTransmissionPower(0x1F);
+  rfid.setTransmissionPower(0x1A);   //37dbm potência máxima permitida
   rfid.acquireTransmitPower(); 
 
   conectarWiFi();
